@@ -4,8 +4,26 @@ wit_bindgen_guest_rust::import!("/Users/shobhitsharma/repos/fifthtry/fpm-utils/w
 
 #[fpm_utils_macro::wasm_backend]
 fn handlerequest(a: guest_backend::Httprequest) -> guest_backend::Httpresponse {
-    let base_url = "https://nxxvgyrffdviepwradwr.supabase.co/rest/v1";
-    let apikey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im54eHZneXJmZmR2aWVwd3JhZHdyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjU1NzY1NDMsImV4cCI6MTk4MTE1MjU0M30.VKvU_1UNlAiH5qHUppYslgs2sTRWUBY0tSLCc5VY3dE";
+    let base_url_header_key = String::from("X-FPM-KAMERI-SUPABASE-BASE-URL");
+    let apikey_header_key = String::from("X-FPM-KAMERI-SUPABASE-API-KEY");
+    let (_, base_url) = a
+        .headers
+        .iter()
+        .find(|(key, _)| key == &base_url_header_key)
+        .expect(
+            format!(
+                "{base_url_header_key} not found in the request. Please configure app properly"
+            )
+            .as_str(),
+        );
+    let (_, apikey) = a
+        .headers
+        .iter()
+        .find(|(key, _)| key == &apikey_header_key)
+        .expect(
+            format!("{apikey_header_key} not found in the request. Please configure app properly")
+                .as_str(),
+        );
     let header_map = [("Content-Type", "application/json"), ("apiKey", apikey)];
     let resp = match a.path.as_str() {
         "/api/todos/" => host::http(host::Httprequest {
