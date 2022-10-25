@@ -20,6 +20,7 @@ jobs:
             ~/.cargo/git
             target
             ftd/target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
       - name: Run Build
         id: build-windows
         continue-on-error: false
