@@ -4,18 +4,19 @@ wit_bindgen_guest_rust::import!("/Users/shobhitsharma/repos/fifthtry/fpm-utils/w
 
 #[fpm_utils_macro::wasm_backend]
 fn handlerequest(a: guest_backend::Httprequest) -> guest_backend::Httpresponse {
-    let base_url_header_key = String::from("X-FPM-KAMERI-SUPABASE-BASE-URL");
+    let project_id_header_key = String::from("X-FPM-KAMERI-SUPABASE-PROJECT-ID");
     let apikey_header_key = String::from("X-FPM-KAMERI-SUPABASE-API-KEY");
-    let (_, base_url) = a
+    let (_, project_id) = a
         .headers
         .iter()
-        .find(|(key, _)| key == &base_url_header_key)
+        .find(|(key, _)| key == &project_id_header_key)
         .expect(
             format!(
-                "{base_url_header_key} not found in the request. Please configure app properly"
+                "{project_id_header_key} not found in the request. Please configure app properly"
             )
             .as_str(),
         );
+    let base_url = format!("https://{project_id}.supabase.co/rest/v1");
     let (_, apikey) = a
         .headers
         .iter()
