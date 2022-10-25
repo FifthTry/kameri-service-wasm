@@ -21,6 +21,8 @@ jobs:
             target
             ftd/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+      - name: Install wasm32-unknown-unknown
+      run: rustup target add wasm32-unknown-unknown
       - name: Run Build
         id: build-windows
         continue-on-error: false
