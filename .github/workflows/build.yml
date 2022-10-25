@@ -1,0 +1,39 @@
+name: Build release
+
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build-and-release:
+    name: Build and release WASM
+    runs-on: ubuntu-latest
+    env:
+      CARGO_TERM_COLOR: always
+      BUILD_TARGET: wasm32-unknown-unknown
+      BINARY_NAME: backend
+    steps:
+      - uses: actions/checkout@main
+      - uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+            ftd/target
+      - name: Run Build
+        id: build-windows
+        continue-on-error: false
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+      - name: Rename assets
+        run: |
+          mv target/wasm32-unknown-unknown/release/kameri_service_wasm.wasm ~/download/backend.wasm
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "~/download/backend.wasm"
+          generateReleaseNotes: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag: ${{ github.event.inputs.releaseTag }}
+          prerelease: ${{ github.event.inputs.productionRelease && github.event.inputs.productionRelease == 'false' }}
