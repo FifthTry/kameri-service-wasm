@@ -9,5 +9,5 @@ crate-type = ["cdylib"]
 [dependencies]
 serde = {version="1.0.144", features=["derive"]}
 serde_json = "1.0.85"
-fpm-utils-macro = {path="../fpm-utils"}
+fpm-utils-macro = { git="https://github.com/ftd-lang/fpm-utils", rev="e52231c9a46967b782296c711a871d1713a5755b"}
 wit-bindgen-guest-rust = { git = "https://github.com/bytecodealliance/wit-bindgen.git", rev="9ef6717e2c5337e84e0a7bd56918a5ae4bef12ca" }
