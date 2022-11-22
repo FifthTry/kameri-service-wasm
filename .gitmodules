@@ -1,0 +1,3 @@
+[submodule "fpm-utils"]
+	path = fpm-utils
+	url = git@github.com:ftd-lang/fpm-utils.git

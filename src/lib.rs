@@ -1,6 +1,6 @@
 mod types;
 
-wit_bindgen_guest_rust::import!("/Users/shobhitsharma/repos/fifthtry/fpm-utils/wits/host.wit");
+wit_bindgen_guest_rust::import!("../fpm-utils/wits/host.wit");
 
 #[fpm_utils_macro::wasm_backend]
 fn handlerequest(a: guest_backend::Httprequest) -> guest_backend::Httpresponse {

@@ -99,7 +99,6 @@ dependencies = [
 [[package]]
 name = "fpm-utils-macro"
 version = "0.1.0"
-source = "git+https://github.com/ftd-lang/fpm-utils?rev=e52231c9a46967b782296c711a871d1713a5755b#e52231c9a46967b782296c711a871d1713a5755b"
 dependencies = [
  "proc-macro2",
  "quote",
